@@ -33,7 +33,7 @@ d3.csv("data.csv").then(function(data) {
 
   // Format the data
   data.forEach(function(data) {
-    data.pverty = +data.poverty;
+    data.poverty = +data.poverty;
     data.healthcare = +data.healthcare;
   });
 
