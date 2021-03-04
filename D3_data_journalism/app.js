@@ -68,7 +68,7 @@ d3.csv("data.csv").then(function (data) {
     .append("circle")
     .attr("cx", d => xLinearScale(d.poverty))
     .attr("cy", d => yLinearScale(d.healthcare))
-    .attr("r", "7")
+    .attr("r", "10")
     .attr("fill", "gray");
 
   // Initialize tool tip
@@ -77,14 +77,14 @@ d3.csv("data.csv").then(function (data) {
     .attr("class", "tooltip")
     .offset([80, -60])
     .html(function (d) {
-      return (`${d.rockband}<br>Healthcare: ${d.healthcare}<br>Poverty: ${d.poverty}`);
+      return (`${d.state}<br>Healthcare: ${d.healthcare}<br>Poverty: ${d.poverty}`);
     });
 
-  // Step 7: Create tooltip in the chart
+  // Create tooltip in the chart
   // ==============================
   chartGroup.call(toolTip);
 
-  // Step 8: Create event listeners to display and hide the tooltip
+  // Create event listeners to display and hide the tooltip
   // ==============================
   circlesGroup.on("click", function (data) {
     toolTip.show(data, this);
@@ -93,6 +93,18 @@ d3.csv("data.csv").then(function (data) {
     .on("mouseout", function (data, index) {
       toolTip.hide(data);
     });
+  // Creating the abbreviations for circles
+  chartGroup.selectAll("null").data(data)
+    .enter()
+    .append("text")
+    .text(function (d) {
+      return d.abbr;
+    })
+    .attr("x", d => xLinearScale(d.poverty))
+    .attr("y", d => yLinearScale(d.healthcare))
+    .attr("text-anchor", "middle")
+    .attr('fill', 'white')
+    .attr('font-size', 10);
 
   // Create axes labels
   chartGroup.append("text")
