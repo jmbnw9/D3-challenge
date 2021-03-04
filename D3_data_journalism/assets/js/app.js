@@ -1,4 +1,4 @@
-// Step 1: Set up our chart
+// Set up our chart
 //= ================================
 var svgWidth = 960;
 var svgHeight = 500;
@@ -13,7 +13,7 @@ var margin = {
 var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
-// Step 2: Create an SVG wrapper,
+// Create an SVG wrapper,
 // append an SVG group that will hold our chart,
 // and shift the latter by left and top margins.
 // =================================
@@ -26,18 +26,17 @@ var svg = d3
 var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-// Step 3:
 // Import data from the data.csv file
 // =================================
-d3.csv("data/data.csv").then(function(data) {
+d3.csv("data/data.csv").then(function (data) {
 
   // Format the data
-  data.forEach(function(data) {
+  data.forEach(function (data) {
     data.poverty = +data.poverty;
     data.healthcare = +data.healthcare;
   });
 
-  // Step 4: Create the scales for the chart
+  // Create the scales for the chart
   // =================================
   var xLinearScale = d3.scaleLinear()
     .domain([0, d3.max(data, d => d.poverty)])
@@ -47,12 +46,12 @@ d3.csv("data/data.csv").then(function(data) {
     .domain([0, d3.max(data, d => d.healthcare)])
     .range([height, 0]);
 
-  // Step 5: Create the axes
+  // Create the axes
   // =================================
   var bottomAxis = d3.axisBottom(xLinearScale);
   var leftAxis = d3.axisLeft(yLinearScale);
 
-  // Step 6: Append the axes to the chartGroup
+  // Append the axes to the chartGroup
   // ==============================================
   // Add x-axis
   chartGroup.append("g")
@@ -62,8 +61,8 @@ d3.csv("data/data.csv").then(function(data) {
   // Add y-axis
   chartGroup.append("g").call(leftAxis);
 
-    // append circles to data points
-    var circlesGroup = chartGroup.selectAll("circle")
+  // append circles to data points
+  var circlesGroup = chartGroup.selectAll("circle")
     .data(data)
     .enter()
     .append("circle")
@@ -73,10 +72,6 @@ d3.csv("data/data.csv").then(function(data) {
     .attr("fill", "gray");
 
 
-  // Line generator for evening data
-  var line2 = d3.line()
-    .x(d => xTimeScale(d.date))
-    .y(d => yLinearScale(d.evening));
 
   // Append a path for line1
   chartGroup
@@ -91,7 +86,7 @@ d3.csv("data/data.csv").then(function(data) {
     .attr("d", line2)
     .classed("line orange", true);
 
-}).catch(function(error) {
+}).catch(function (error) {
   console.log(error);
 });
 
