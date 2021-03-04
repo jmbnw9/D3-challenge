@@ -69,7 +69,7 @@ d3.csv("data.csv").then(function (data) {
     .attr("cx", d => xLinearScale(d.poverty))
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", "10")
-    .attr("fill", "gray");
+    .attr("fill", "blue");
 
   // Initialize tool tip
   // ==============================
