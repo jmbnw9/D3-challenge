@@ -62,13 +62,16 @@ d3.csv("data/data.csv").then(function(data) {
   // Add y-axis
   chartGroup.append("g").call(leftAxis);
 
-  // Step 7: Set up two line generators and append two SVG paths
-  // ==============================================
+    // append circles to data points
+    var circlesGroup = chartGroup.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("cx", (d, i) => xScale(d.poverty))
+    .attr("cy", d => yScale(d.healthcare))
+    .attr("r", "5")
+    .attr("fill", "gray");
 
-  // Line generator for morning data
-  var line1 = d3.line()
-    .x(d => xTimeScale(d.date))
-    .y(d => yLinearScale(d.morning));
 
   // Line generator for evening data
   var line2 = d3.line()
